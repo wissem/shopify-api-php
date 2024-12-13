@@ -233,19 +233,6 @@ class Http
      */
     private function logApiDeprecation(string $url, string $reason): void
     {
-        $warningFilePath = $this->getApiDeprecationTimestampFilePath();
-
-        $lastWarning = null;
-        if (file_exists($warningFilePath)) {
-            $lastWarning = (int)(file_get_contents($warningFilePath));
-        }
-
-        if (time() - $lastWarning < self::DEPRECATION_ALERT_SECONDS) {
-            return;
-        }
-
-        file_put_contents($warningFilePath, time());
-
         $e = new Exception();
         $stackTrace = str_replace("\n", "\n    ", $e->getTraceAsString());
 
